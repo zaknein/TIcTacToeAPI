@@ -1,6 +1,29 @@
 spring:
     application:
         name: TicTacToeAPI
+    config:
+        import: optional:file:.env[.properties]
+
+    datasource:
+        url: ${SPRING_DATASOURCE_URL}
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+        driver-class-name: org.postgresql.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+
+
+
+
+
+
+
 
 jwt:
     expiration: 86400000
@@ -9,3 +32,5 @@ jwt:
 rsa:
     public-key: classpath:certs/public.pem
     private-key: classpath:certs/private.pem
+
+
