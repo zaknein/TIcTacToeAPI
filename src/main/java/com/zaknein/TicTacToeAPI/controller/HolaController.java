@@ -18,7 +18,7 @@ public class HolaController {
     }
 
     @GetMapping("/holaprivated")
-    public String geame(@RequestParam String param) {
+    public String geame() {
         return new String("turn back back");
     }
     

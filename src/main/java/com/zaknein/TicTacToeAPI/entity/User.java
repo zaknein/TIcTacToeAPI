@@ -1,5 +1,10 @@
 package com.zaknein.TicTacToeAPI.entity;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +31,10 @@ public class User {
 
     @Column(nullable = false)
     final private String password;
+
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 
 
 
