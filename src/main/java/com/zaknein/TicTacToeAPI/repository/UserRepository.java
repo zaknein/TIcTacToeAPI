@@ -7,9 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.zaknein.TicTacToeAPI.entity.User;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-
 
 
 @Repository

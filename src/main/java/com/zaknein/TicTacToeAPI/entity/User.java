@@ -10,10 +10,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -24,13 +28,13 @@ public class User {
 
     @Id
     @GeneratedValue()
-    final private Long id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
-    final private String email;
+    private String email;
 
     @Column(nullable = false)
-    final private String password;
+    private String password;
 
     public Collection<SimpleGrantedAuthority> getAuthorities() {
         return List.of();

@@ -13,6 +13,7 @@ import com.zaknein.TicTacToeAPI.repository.UserRepository;
 import com.zaknein.TicTacToeAPI.utiles.TokenUtils;
 
 import lombok.AllArgsConstructor;
+import lombok.val;
 
 @AllArgsConstructor
 @Service
@@ -20,8 +21,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    // TODO: Mover a su propio servicio jwtservice
-    private final JwtEncoder jwtEncoder;
+    private final JwtService jwtService;
 
     public AuthResponse register(RegisterRequest request) {
 
@@ -29,6 +29,7 @@ public class AuthService {
         if (userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("can´t create with email");
         }
+
 
         // Create new user
         final var user = User.builder()
@@ -38,9 +39,7 @@ public class AuthService {
 
         final var saved = userRepository.save(user);
 
-        // Generate JWT token
-        // TODO Mover a jwt service
-        final String token = TokenUtils.generate(jwtEncoder, saved);
+        final String token = jwtService.gerateSessionToken(saved);
 
         // Return authentication response
         return new AuthResponse(new UserSummary(request.email()), token);
@@ -58,8 +57,7 @@ public class AuthService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        // TODO Mover a jwt service
-        final String token = TokenUtils.generate(jwtEncoder, user);
+        final String token = jwtService.gerateSessionToken(user);
         
         return new AuthResponse(new UserSummary(request.email()), token);
     }

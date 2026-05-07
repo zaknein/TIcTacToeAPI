@@ -18,17 +18,12 @@ spring:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
 
-
-
-
-
-
-
-
 jwt:
-    expiration: 86400000
-    secret: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
-
+    session:
+        expiration-minutes: ${JWT_EXPIRATION_MINUTES_SESSION:10}
+    refresh:
+        expiration-minutes: ${JWT_EXPIRATION_MINUTES_REFRESH:7200}
+        
 rsa:
     public-key: classpath:certs/public.pem
     private-key: classpath:certs/private.pem

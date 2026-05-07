@@ -16,7 +16,7 @@ import com.zaknein.TicTacToeAPI.entity.User;
 
 
 public class TokenUtils {
- public static String generate(JwtEncoder encoder, User user) {
+ public static String generate(JwtEncoder encoder, User user, Long expirationInMinutes) {
         final var now = Instant.now();
         final var scope = user.getAuthorities().stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
@@ -24,7 +24,7 @@ public class TokenUtils {
         final var claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(10, ChronoUnit.MINUTES))
+                .expiresAt(now.plus(expirationInMinutes, ChronoUnit.MINUTES))
                 .subject(user.getEmail())
                 .claim("scope", scope)
                 .build();
