@@ -3,6 +3,8 @@ package com.zaknein.TicTacToeAPI.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zaknein.TicTacToeAPI.service.GameService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/games/")
 @RestController
 public class GamesController {
+
+    private final GameService gameService;
 
     @PostMapping()
     public String challengePlayer(@RequestBody String oponent) {
