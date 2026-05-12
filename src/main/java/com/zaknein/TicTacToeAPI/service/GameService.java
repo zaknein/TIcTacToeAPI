@@ -10,7 +10,11 @@ public class GameService {
     
 
 
-    public String challengePlayer(){
+    public String challengePlayer(String oponent){
+
+
+        
+
 
         String caca = "caca";
 

@@ -24,9 +24,8 @@ public class GamesController {
 
     @PostMapping()
     public String challengePlayer(@RequestBody String oponent) {
-        //TODO: process POST request
         
-        return gameService.challengePlayer();
+        return gameService.challengePlayer(oponent);
     }
     
     // @GetMapping()
