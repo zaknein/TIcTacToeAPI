@@ -41,9 +41,7 @@ public class Game {
     @GeneratedValue
     private Long id;
 
-
     private User playerX;
-
 
     private User playerO;
 
@@ -51,14 +49,10 @@ public class Game {
 
     private User currentTurn;
 
-
     private GameStatus status;
-
 
     private User winner;
 
     private LocalDateTime created_at;
-
-
 
 }
