@@ -61,6 +61,10 @@ public class Game {
 
     private Long[][] board;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    @JsonIgnore
+    @ToString.Exclude
     private User currentTurn;
 
     private GameStatus status;

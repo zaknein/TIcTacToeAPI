@@ -42,13 +42,18 @@ public class User {
     private String password;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "playerX", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Game>games;
+    private List<Game>playerXGames;
 
 
-    
+    @OneToMany(mappedBy = "playerO", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Game>playerOGames;
+
+
     public Collection<SimpleGrantedAuthority> getAuthorities() {
         return List.of();
     }
