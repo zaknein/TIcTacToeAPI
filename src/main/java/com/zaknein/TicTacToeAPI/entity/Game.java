@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -59,7 +60,8 @@ public class Game {
     @ToString.Exclude
     private User playerO;
 
-    private Long[][] board;
+    @Convert(converter = BoardConverter.class)
+    private String[][] board;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -69,6 +71,10 @@ public class Game {
 
     private GameStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    @JsonIgnore
+    @ToString.Exclude
     private User winner;
 
     private LocalDateTime created_at;
