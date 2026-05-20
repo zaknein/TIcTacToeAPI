@@ -1,6 +1,7 @@
 package com.zaknein.TicTacToeAPI.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaknein.TicTacToeAPI.dto.ChallengeRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -38,12 +40,12 @@ public class GamesController {
         return gameService.getMyGames();
     }
 
-    // @GetMapping("/{id}")
-    // public String getMethodName(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public Game getMethodName(@PathVariable Long id) {
 
-
-    //     return gameService.getAllGames(Long id);
-    // }
+        System.out.println("log dentro del controller");
+        return gameService.getGamesById(id);
+    }
 
     // @DeleteMapping("/{id}")
     // public void deleteGame(@RequestParam Long id){

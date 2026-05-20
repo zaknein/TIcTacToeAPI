@@ -2,6 +2,7 @@ package com.zaknein.TicTacToeAPI.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.boot.security.oauth2.server.resource.autoconfigure.OAuth2ResourceServerProperties.Jwt;
@@ -85,6 +86,17 @@ public class GameService {
 
         return playedAsO;
     }
+
+
+    public Game getGamesById(Long id){
+        System.out.println("dentro de service pero antes de buscar el games");
+        Game game = gamesRepository.findById(id)
+                            .orElseThrow(()-> new RuntimeException());
+        System.out.println("soy un sout dentro de gamesby id");
+        return game;
+    }
+
+
 
 
 }
