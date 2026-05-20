@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -43,15 +44,14 @@ public class GamesController {
     @GetMapping("/{id}")
     public Game getMethodName(@PathVariable Long id) {
 
-        System.out.println("log dentro del controller");
         return gameService.getGamesById(id);
     }
 
-    // @DeleteMapping("/{id}")
-    // public void deleteGame(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public void deleteGame(@RequestParam Long id){
 
-    //     gameService.deleteGame(id);
-    // }
+        gameService.deleteGame(id);
+    }
     
     
 

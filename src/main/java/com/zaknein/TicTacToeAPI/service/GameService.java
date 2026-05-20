@@ -1,5 +1,6 @@
 package com.zaknein.TicTacToeAPI.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import com.zaknein.TicTacToeAPI.entity.User;
 import com.zaknein.TicTacToeAPI.repository.GamesRepository;
 import com.zaknein.TicTacToeAPI.repository.UserRepository;
 
+import ch.qos.logback.classic.spi.ThrowableProxyUtil;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -30,7 +32,6 @@ public class GameService {
 
         String emailUser =(String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        System.out.println(">>> emailOponent recibido: [" + emailOponent + "]11111");
 
         User playerX;
         User playerO;
@@ -38,12 +39,10 @@ public class GameService {
         User user = userRepository.findByEmail(emailUser)
                             .orElseThrow(()-> new RuntimeException());  
         
-        System.out.println(">>> emailOponent recibido: [" + emailOponent + "]222222");
 
         User oponentUser = userRepository.findByEmail(emailOponent)
                             .orElseThrow(()-> new RuntimeException("invalid oponent"));  
         
-        System.out.println(">>> emailOponent recibido: [" + emailOponent + "]33333");
         Boolean result = new Random().nextBoolean();
 
         if (result == true) {
@@ -60,6 +59,7 @@ public class GameService {
                     .playerO(playerO)
                     .board(new String[3][3])
                     .currentTurn(playerX)
+                    .winner(null)
                     .status(GameStatus.IN_PROGRESS)
                     .created_at(LocalDateTime.now())
                     .build();
@@ -89,11 +89,32 @@ public class GameService {
 
 
     public Game getGamesById(Long id){
-        System.out.println("dentro de service pero antes de buscar el games");
         Game game = gamesRepository.findById(id)
                             .orElseThrow(()-> new RuntimeException());
-        System.out.println("soy un sout dentro de gamesby id");
+
         return game;
+    }
+
+    public void deleteGame(Long id) {
+
+        String emailUser =(String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Game game = gamesRepository.findById(id)
+                    .orElseThrow(()-> new RuntimeException());
+
+        String playedAsO = game.getPlayerO().getEmail();
+        String playedAsX = game.getPlayerX().getEmail();
+
+        if(!emailUser.equals(playedAsO) && !emailUser.equals(playedAsX) ){
+            
+            throw new RuntimeException("User is not allowed to cancel this game");
+
+        }else{
+            game.setStatus(GameStatus.CANCELLED);
+
+            gamesRepository.save(game);
+        }
+
     }
 
 
