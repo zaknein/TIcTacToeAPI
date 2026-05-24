@@ -118,6 +118,30 @@ public class GameService {
     }
 
 
+    public Game makeMove(Long gameId, int row, int col){
+
+        Game game = gamesRepository.findById(gameId)
+                    .orElseThrow(()-> new RuntimeException());
+
+        String [][] board = game.getBoard();
+
+        if(board[row][col] !=null){
+            throw new RuntimeException("Cell already taken");
+        }
+
+        String symbol = game.getCurrentTurn().equals(game.getPlayerX()) ? "X" : "O";
+        board[row][col] = symbol;
+
+        game.setBoard(board);
+        
+        User nextTrun = game.getCurrentTurn().equals(game.getPlayerX())
+            ? game.getPlayerO()
+            : game.getPlayerX();
+        game.setCurrentTurn(nextTrun);
+
+        return gamesRepository.save(game);
+
+    }
 
 
 }

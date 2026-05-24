@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaknein.TicTacToeAPI.dto.ChallengeRequest;
+import com.zaknein.TicTacToeAPI.dto.MoveRequest;
 import com.zaknein.TicTacToeAPI.entity.Game;
 import com.zaknein.TicTacToeAPI.service.GameService;
 
@@ -52,7 +53,15 @@ public class GamesController {
 
         gameService.deleteGame(id);
     }
-    
+
+    @PostMapping("/{id}/move")
+    public Game makeMove(@PathVariable Long id,@RequestBody MoveRequest move) {
+        
+        return gameService.makeMove(id,move.row(), move.col());
+        
+         
+    }
+       
     
 
 
