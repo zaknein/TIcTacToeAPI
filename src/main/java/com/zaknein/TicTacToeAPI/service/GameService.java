@@ -118,7 +118,7 @@ public class GameService {
     }
 
 
-    public Game makeMove(Long gameId, int row, int col){
+    public GameStatus makeMove(Long gameId, int row, int col){
 
         Game game = gamesRepository.findById(gameId)
                     .orElseThrow(()-> new RuntimeException());
@@ -139,8 +139,28 @@ public class GameService {
             : game.getPlayerX();
         game.setCurrentTurn(nextTrun);
 
-        return gamesRepository.save(game);
 
+       GameStatus result = victoryDetection(game);
+
+        
+
+
+
+
+
+
+
+        gamesRepository.save(game);
+     
+        return result;
+    }
+
+
+    private GameStatus victoryDetection(Game game){
+
+
+
+        return game.getStatus();
     }
 
 
