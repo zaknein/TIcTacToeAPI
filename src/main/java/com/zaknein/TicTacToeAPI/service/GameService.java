@@ -142,13 +142,7 @@ public class GameService {
 
        GameStatus result = victoryDetection(game);
 
-        
-
-
-
-
-
-
+        game.setStatus(result);
 
         gamesRepository.save(game);
      
@@ -158,10 +152,64 @@ public class GameService {
 
     private GameStatus victoryDetection(Game game){
 
+        
+        String[][] board = game.getBoard();
 
+        // Filas
+        for (int row = 0; row < 3; row++) {
+            if (board[row][0] != null
+                    && board[row][0].equals(board[row][1])
+                    && board[row][1].equals(board[row][2])) {
 
-        return game.getStatus();
+                setWinner(game, board[row][0]);
+                game.setStatus(GameStatus.FINISHED);
+                return GameStatus.FINISHED;
+            }
+        }
+
+        // Columnas
+        for (int col = 0; col < 3; col++) {
+            if (board[0][col] != null
+                    && board[0][col].equals(board[1][col])
+                    && board[1][col].equals(board[2][col])) {
+
+                setWinner(game, board[0][col]);
+                game.setStatus(GameStatus.FINISHED);
+                return GameStatus.FINISHED;
+            }
+        }
+
+        // Diagonal principal
+        if (board[0][0] != null
+                && board[0][0].equals(board[1][1])
+                && board[1][1].equals(board[2][2])) {
+
+            setWinner(game, board[0][0]);
+            game.setStatus(GameStatus.FINISHED);
+            return GameStatus.FINISHED;
+        }
+
+        // Diagonal secundaria
+        if (board[0][2] != null
+                && board[0][2].equals(board[1][1])
+                && board[1][1].equals(board[2][0])) {
+
+            setWinner(game, board[0][2]);
+            game.setStatus(GameStatus.FINISHED);
+            return GameStatus.FINISHED;
+        }
+
+        return GameStatus.IN_PROGRESS;
+
     }
 
+    private void setWinner(Game game, String symbol) {
+
+    if ("X".equals(symbol)) {
+        game.setWinner(game.getPlayerX());
+    } else {
+        game.setWinner(game.getPlayerO());
+    }
+}
 
 }
