@@ -9,6 +9,8 @@ import com.zaknein.TicTacToeAPI.dto.LoginRequest;
 import com.zaknein.TicTacToeAPI.dto.RegisterRequest;
 import com.zaknein.TicTacToeAPI.dto.UserSummary;
 import com.zaknein.TicTacToeAPI.entity.User;
+import com.zaknein.TicTacToeAPI.exceptions.CantCreateException;
+import com.zaknein.TicTacToeAPI.exceptions.InvalidEmailException;
 import com.zaknein.TicTacToeAPI.repository.UserRepository;
 import com.zaknein.TicTacToeAPI.utiles.TokenUtils;
 
@@ -27,7 +29,7 @@ public class AuthService {
 
         // Validate email uniqueness
         if (userRepository.existsByEmail(request.email())) {
-            throw new RuntimeException("can´t create with email");
+            throw new CantCreateException("can´t create with email");
         }
 
 
@@ -49,12 +51,12 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
 
         final var user = userRepository.findByEmail(request.email()).orElseThrow(() -> {
-            throw new RuntimeException("Invalid email or password");
+            throw new InvalidEmailException("Invalid email or password");
         });
 
         final boolean passwordMatches = passwordEncoder.matches(request.password(), user.getPassword());
         if (!passwordMatches) {
-            throw new RuntimeException("Invalid email or password");
+            throw new InvalidEmailException("Invalid email or password");
         }
 
         final String token = jwtService.gerateSessionToken(user);
